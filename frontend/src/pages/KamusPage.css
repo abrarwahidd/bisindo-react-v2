@@ -1,0 +1,218 @@
+.kamus-page {
+  width: 100%;
+  max-width: 1200px;
+  padding: 3rem 2rem;
+  margin: 0 auto;
+  margin-top: 2.5rem;
+  /* 1. Tambahkan Latar Belakang Gradien Halus */
+  background: linear-gradient(180deg, #f7f9ff 0%, #ffffff 25%);
+}
+
+/* ===== Header Halaman Kamus ===== */
+.kamus-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  position: relative;
+  padding: 2rem 0;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+/* 2. Hiasan dibuat sedikit lebih terlihat */
+.kamus-header::before {
+  content: "";
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3e%3ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='Poppins, sans-serif' font-size='120' font-weight='700' fill='%23eef2ff'%3eA%3c/text%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-size: contain;
+  top: 50%;
+  left: -40px;
+  transform: translateY(-50%) rotate(-15deg);
+  z-index: 0;
+  opacity: 1; /* Dibuat lebih jelas */
+}
+
+.kamus-header::after {
+  content: "";
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23eef2ff' stroke-width='1'%3e%3cpath d='M18 11V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0M14 10V4a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v2M10 11V2a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v10a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3v-1a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v0'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-size: contain;
+  bottom: -60px;
+  right: -40px;
+  z-index: 0;
+  transform: rotate(15deg);
+  opacity: 1; /* Dibuat lebih jelas */
+}
+
+.kamus-header h1,
+.kamus-header p {
+  position: relative;
+  z-index: 1;
+}
+.kamus-header h1 {
+  font-family: "Poppins", sans-serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #1a202c;
+  margin-bottom: 1rem;
+}
+.kamus-header p {
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  color: #718096;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* ===== 3. Desain Ulang Tabs Navigasi ===== */
+.kamus-tabs {
+  display: inline-flex; /* Agar lebar sesuai konten */
+  justify-content: center;
+  margin-bottom: 3.5rem;
+  background-color: #f1f5f9; /* Latar abu-abu untuk kontainer tab */
+  border-radius: 50px; /* Bentuk kapsul */
+  padding: 0.5rem;
+  /* Pusatkan kontainer tab */
+  left: 50%;
+  transform: translateX(-50%);
+  position: relative;
+}
+
+.kamus-tab-button {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500; /* Sedikit lebih tipis */
+  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  color: #475569;
+  position: relative;
+  border-radius: 30px; /* Bentuk kapsul */
+  transition: all 0.3s ease;
+}
+
+.kamus-tab-button:hover {
+  color: #3b82f6;
+}
+
+.kamus-tab-button.active {
+  color: #3b82f6;
+  background-color: #ffffff; /* Latar putih untuk tab aktif */
+  font-weight: 600;
+  box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.1);
+}
+
+/* ===== Grid Kamus ===== */
+.kamus-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1.8rem;
+}
+
+/* ===== 4. Desain Ulang Kartu dengan Efek Border Gradien ===== */
+.kamus-item {
+  position: relative; /* Diperlukan untuk border gradien */
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 3px; /* Jarak untuk border */
+  text-align: center;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 15px -5px rgba(59, 130, 246, 0.4); /* Tambahkan bayangan halus */
+}
+
+/* Lapisan gradien di belakang */
+.kamus-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #3b82f6, #34d399);
+  z-index: 0;
+  opacity: 0; /* Awalnya transparan */
+  transition: opacity 0.3s ease;
+}
+
+.kamus-item:hover {
+  transform: translateY(-5px);
+}
+.kamus-item:hover::before {
+  opacity: 1; /* Tampilkan gradien saat hover */
+}
+
+/* Konten kartu (media & label) harus berada di atas lapisan gradien */
+.item-media,
+.item-label {
+  position: relative;
+  z-index: 1;
+  background-color: #ffffff; /* Pastikan konten punya latar putih */
+}
+
+.item-media {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-top-left-radius: 14px; /* Sudut sedikit lebih kecil dari induk */
+  border-top-right-radius: 14px;
+  overflow: hidden;
+}
+.item-media img,
+.item-media video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.item-label {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #1a202c;
+  padding: 1.2rem;
+  margin: 0;
+  border-bottom-left-radius: 14px;
+  border-bottom-right-radius: 14px;
+}
+
+/* ===== Responsif untuk Mobile ===== */
+@media (max-width: 768px) {
+  .kamus-page {
+    padding: 1.5rem 1rem;
+    margin-top: 4rem;
+  }
+  .kamus-header {
+    margin-bottom: 2.5rem;
+  }
+  .kamus-header h1 {
+    font-size: 2.5rem;
+  }
+  .kamus-header p {
+    font-size: 1rem;
+  }
+  .kamus-tabs {
+    margin-bottom: 2rem;
+  }
+  .kamus-tab-button {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+  .kamus-grid {
+    grid-template-columns: repeat(
+      auto-fill,
+      minmax(130px, 1fr)
+    ); /* 2-3 kolom di mobile */
+    gap: 1rem;
+  }
+  .item-label {
+    font-size: 1.1rem;
+    padding: 1rem;
+  }
+}

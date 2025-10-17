@@ -1,0 +1,354 @@
+/* src/pages/BelajarPage.css */
+
+/* Tambahkan @keyframes baru ini di bagian atas file */
+@keyframes fadeInPane {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ===== Layout Utama Workspace ===== */
+.belajar-workspace {
+  width: 100%;
+  max-width: 1024px;
+  /* min-height: 80vh; Tinggi minimal agar terlihat penuh */
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  margin-top: 4rem; /* Jarak dari navbar */
+  align-items: flex-start;
+}
+
+.video-panel {
+  flex: 1.3;
+  display: flex;
+  /* HAPUS background-color, ganti dengan padding & background gradien */
+  padding: 3px; /* Ketebalan bingkai gradien */
+  background: linear-gradient(
+    135deg,
+    #3b82f6,
+    #14b8a6
+  ); /* Gradien untuk bingkai */
+  border-radius: 18px; /* Sedikit perbesar radius */
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  /* aspect-ratio: 1/1; */
+  height: 400px;
+  align-self: center;
+}
+
+.control-panel {
+  flex: 1; /* Kolom kontrol lebih kecil */
+  display: flex;
+  flex-direction: column;
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05),
+    0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* ===== Styling di Dalam Panel ===== */
+
+/* Header di panel kontrol */
+.control-panel-header {
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+.control-panel-header h2 {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.3rem;
+  color: #1a202c;
+  margin: 0 0 0.5rem 0;
+}
+.control-panel-header p {
+  font-family: "Inter", sans-serif;
+  color: #718096;
+  margin: 0;
+  line-height: 1.6;
+  font-size: 0.9rem;
+}
+
+/* Kustomisasi komponen yang sudah ada */
+.video-container {
+  width: 100%;
+  height: 100%;
+  background-color: #1a202c; /* Warna layar yang gelap */
+  border-radius: 16px; /* Radius lebih kecil dari bingkai agar pas di dalam */
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Tombol Kontrol */
+.controls {
+  margin-bottom: 2rem; /* Jarak lebih besar */
+}
+.controls button {
+  width: 100%;
+  padding: 0.8rem;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border-radius: 10px;
+}
+
+/* Tombol utama (Mulai Kamera) */
+.controls button#startButton {
+  background-image: linear-gradient(90deg, #4f46e5, #7c3aed);
+  box-shadow: 0 10px 20px -10px #7c3aed;
+  transition: all 0.3s ease;
+}
+.controls button#startButton:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px -5px #7c3aed;
+}
+
+/* Tabs sebagai Segmented Control */
+.tabs {
+  background-color: #f1f5f9;
+  border-radius: 12px;
+  padding: 0.5rem;
+  border-bottom: none;
+  margin-bottom: 1.5rem;
+}
+.tab-button {
+  flex: 1;
+  padding: 0.6rem;
+  font-size: 0.9rem;
+  font-family: "Inter", sans-serif;
+  font-weight: 500;
+  color: #475569;
+  border-radius: 8px;
+  border-bottom: none;
+  transition: all 0.3s ease;
+}
+.tab-button.active {
+  background-color: #ffffff;
+  color: #4f46e5;
+  box-shadow: 0 2px 10px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Pane untuk menampilkan informasi */
+.info-pane {
+  flex-grow: 1; /* Mengisi sisa ruang */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  background-color: #f8fafc;
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+/* Kustomisasi panel-panel info */
+.pane {
+  padding: 0;
+  background-color: transparent;
+}
+
+#predictionOutput,
+#instruction-char {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  color: #4f46e5;
+}
+
+.feedback-text {
+  font-family: "Inter", sans-serif;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+/* Hapus tombol 'Soal Berikutnya' jika tidak diperlukan, atau style seperti ini */
+#nextQuestionButton {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  width: auto;
+  background-color: #34d399; /* Warna hijau lembut */
+}
+#nextQuestionButton:hover {
+  background-color: #10b981;
+}
+
+.dictionary-grid {
+  max-height: 200px; /* Sesuaikan tinggi kamus */
+}
+
+/* ===== Style untuk Tampilan Kamus Full-Width ===== */
+
+/* Transisi halus untuk kedua panel */
+.video-panel,
+.control-panel {
+  transition: all 0.5s ease-in-out;
+}
+
+/* Saat mode kamus aktif, sembunyikan panel video */
+.belajar-workspace.dictionary-mode .video-panel {
+  flex: 0;
+  width: 0;
+  padding: 0;
+  margin: 0;
+  opacity: 0;
+}
+
+/* Saat mode kamus aktif, lebarkan panel kontrol */
+.belajar-workspace.dictionary-mode .control-panel {
+  flex: 1 0 100%; /* Memaksa panel mengisi seluruh ruang */
+}
+
+/* GANTI DENGAN BLOK BARU INI */
+.dictionary-pane-full {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  /* Atur opacity awal agar bisa dianimasikan */
+  opacity: 0;
+}
+
+/* Aturan animasi baru yang lebih andal */
+.belajar-workspace.dictionary-mode .dictionary-pane-full {
+  /* Nama animasi | durasi | fungsi waktu | jeda | mode isian */
+  animation: fadeInPane 0.4s ease-out 0.3s forwards;
+}
+
+.dictionary-header {
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+.dictionary-header h3 {
+  font-family: "Poppins", sans-serif;
+  font-size: 1.6rem;
+  color: #1a202c;
+  margin: 0 0 1rem 0;
+}
+
+.search-wrapper {
+  position: relative;
+}
+.search-wrapper svg {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+}
+.search-input {
+  width: 100%;
+  padding: 0.8rem 1rem 0.8rem 3rem; /* Padding kiri untuk ikon */
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.search-input:focus {
+  outline: none;
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+}
+
+.dictionary-grid {
+  flex-grow: 1; /* Grid mengisi sisa ruang */
+  overflow-y: auto;
+  max-height: 450px; /* Tinggi maksimum grid kamus */
+}
+
+.no-results {
+  color: #718096;
+  font-style: italic;
+}
+
+/* Tambahkan di paling bawah BelajarPage.css */
+
+.control-panel-main-content {
+  transition: all 0.5s ease-in-out;
+  overflow: hidden;
+}
+
+.belajar-workspace.dictionary-mode .control-panel-main-content {
+  height: 0;
+  opacity: 0;
+  margin: 0;
+  padding: 0;
+}
+
+/* GANTI SELURUH BLOK @media LAMA ANDA DENGAN YANG BARU INI */
+
+@media (max-width: 768px) {
+  .belajar-workspace {
+    flex-direction: column;
+    padding: 1rem;
+    margin-top: 5rem;
+    gap: 1.5rem;
+  }
+
+  .video-panel {
+    align-self: auto;
+    aspect-ratio: 16 / 9;
+    height: auto;
+    width: 100%;
+    max-width: 400px;
+    align-self: center;
+    max-height: none;
+  }
+
+  .control-panel {
+    padding: 1.5rem;
+  }
+
+  /* --- PERUBAHAN DIMULAI DI SINI --- */
+
+  .control-panel-header {
+    margin-bottom: 1.5rem; /* Kurangi jarak bawah */
+  }
+
+  .control-panel-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .control-panel-header p {
+    font-size: 0.9rem;
+  }
+
+  /* 1. Jadikan kontainer tombol menjadi flexbox */
+  .controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem; /* Kurangi jarak bawah */
+  }
+
+  /* 2. Atur ulang style tombol */
+  .controls button {
+    padding: 0.8rem; /* Perkecil padding tombol */
+    font-size: 0.9rem; /* Perkecil font tombol */
+    width: 50%; /* Beri lebar masing-masing 50% */
+    border-radius: 10px; /* Sedikit kurangi border-radius */
+  }
+
+  .tabs {
+    padding: 0.3rem;
+  }
+
+  .tab-button {
+    padding: 0.6rem 0.4rem;
+    font-size: 0.8rem;
+  }
+
+  #predictionOutput,
+  #instruction-char {
+    font-size: 2.5rem;
+    line-height: 1.3;
+  }
+
+  .feedback-text {
+    font-size: 1rem;
+  }
+}
