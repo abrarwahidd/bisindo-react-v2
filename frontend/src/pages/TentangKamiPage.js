@@ -66,7 +66,7 @@ function TentangKamiPage() {
             <h3>Misi Kami</h3>
             <ul>
               <li>
-                Menyediakan platform belajar BISINDO yang gratis dan mudah
+                Menyediakan platform belajar Abjad BISINDO yang gratis dan mudah
                 diakses.
               </li>
               <li>
@@ -136,7 +136,11 @@ function TentangKamiPage() {
               <a href="#" target="_blank" rel="noopener noreferrer">
                 LinkedIn
               </a>
-              <a href="#" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://github.com/abrarwahidd"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 GitHub
               </a>
             </div>

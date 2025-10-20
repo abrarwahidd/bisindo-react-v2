@@ -192,7 +192,7 @@
 
 .info-title {
   font-family: "Poppins", sans-serif;
-  font-size: 2.6rem;
+  font-size: 2.2rem;
   font-weight: 700;
   color: #1a202c;
   margin: 0;
@@ -236,10 +236,11 @@
 }
 .info-content p {
   font-family: "Inter", sans-serif;
-  font-size: 1.1rem;
+  font-size: 1rem;
   line-height: 1.8;
   color: #4a5568;
   margin: 0; /* Hapus margin default */
+  margin-top: -1rem;
 }
 
 /* ===== QUOTE SECTION ===== */

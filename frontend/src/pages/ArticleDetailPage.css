@@ -7,14 +7,14 @@
 
 /* ===== Header Halaman Detail Artikel ===== */
 .article-detail-header {
-  height: 50vh; /* Sedikit lebih tinggi */
+  height: 45vh; /* Sedikit lebih tinggi */
   min-height: 350px;
   background-size: cover;
   background-position: center;
   position: relative;
   display: flex;
   align-items: flex-end; /* Teks menempel di bawah */
-  padding: 4rem 2rem;
+  padding: 1rem 2rem;
   color: white;
 }
 

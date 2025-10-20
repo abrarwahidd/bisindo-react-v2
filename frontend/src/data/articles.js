@@ -21,16 +21,25 @@ export const articles = [
   {
     id: 2,
     slug: "memahami-budaya-tuli",
-    title: "Lebih dari Sekadar Bahasa: Memahami Budaya Tuli",
-    category: "Budaya Tuli",
+    title: "SIBI dan BISINDO, Mana yang Lebih Umum Digunakan?",
+    category: "SIBI vs BISINDO",
     excerpt:
-      "Budaya Tuli adalah identitas yang kaya, bukan sekadar kondisi medis. Mari selami nilai-nilai, norma, dan cara pandang unik dari komunitas Tuli.",
+      "Artikel ini akan mengupas perbedaan antara BISINDO dan SIBI, serta menjelaskan mana yang lebih umum digunakan di Indonesia.",
     imageUrl: "/images/articles/bisindosibi.jpeg",
     content: `
-      <h2>Perspektif Budaya vs. Medis</h2>
-      <p>Seringkali, ketulian dipandang dari sudut pandang medis sebagai sebuah kekurangan atau disabilitas yang perlu "disembuhkan". Namun, dalam Budaya Tuli (dengan 'T' besar), Tuli adalah sebuah identitas. Komunitas Tuli memiliki bahasa, sejarah, nilai-nilai, dan tradisi yang sama seperti kelompok budaya lainnya.</p>
-      <h2>Pentingnya Bahasa Isyarat</h2>
-      <p>Bahasa isyarat adalah pilar utama Budaya Tuli. Ia bukan sekadar alat komunikasi, tetapi juga medium untuk seni (seperti puisi isyarat), humor, dan transmisi budaya dari generasi ke generasi. Menghargai BISINDO berarti menghargai eksistensi dan kekayaan Budaya Tuli itu sendiri.</p>
+      <h2>Apa itu BISINDO?</h2>
+      <p>Bahasa Isyarat Indonesia (BISINDO) adalah bahasa isyarat yang digunakan oleh komunitas Tuli di Indonesia. BISINDO memiliki struktur dan tata bahasa yang berbeda dari Bahasa Indonesia lisan, dengan mengandalkan gerakan tangan, ekspresi wajah, dan postur tubuh untuk menyampaikan makna.
+
+BISINDO adalah bahasa alami yang berkembang secara organik dalam komunitas Tuli Indonesia. Bahasa ini sering kali digunakan dalam kehidupan sehari-hari oleh masyarakat Tuli untuk berinteraksi satu sama lain, dan juga dipergunakan di berbagai kegiatan sosial dan budaya komunitas Tuli.</p>
+      <h2>Apa itu SIBI?</h2>
+      <p>Sistem Isyarat Bahasa Indonesia (SIBI) adalah sistem bahasa isyarat yang dikembangkan untuk lebih mendekati struktur tata bahasa lisan Bahasa Indonesia. SIBI bertujuan untuk mempermudah komunikasi antara masyarakat Tuli dan masyarakat umum yang tidak fasih dalam BISINDO. SIBI ini menyelaraskan isyarat-isyarat dalam bahasa isyarat dengan struktur kalimat dalam Bahasa Indonesia.
+      Dengan demikian, SIBI lebih terstruktur dan lebih dekat dengan Bahasa Indonesia, baik dalam hal kosakata maupun susunan kalimat. Hal ini membuat SIBI lebih mudah dipahami oleh orang yang baru belajar bahasa isyarat atau orang yang ingin berkomunikasi dengan Tuli, tetapi tidak memiliki pengetahuan mendalam tentang BISINDO.</p>
+      <h2>Mana yang Lebih Umum Digunakan?</h2>
+      <p>Di Indonesia, BISINDO lebih umum digunakan di komunitas Tuli sebagai bahasa komunikasi sehari-hari mereka. Bahasa ini lebih alami dan fleksibel, memungkinkan anggota komunitas Tuli untuk berbicara satu sama lain dengan cara yang lebih ekspresif dan mendalam. BISINDO juga lebih kaya akan nuansa budaya yang penting bagi komunitas Tuli.
+
+Namun, SIBI semakin digunakan dalam interaksi antara masyarakat Tuli dan masyarakat umum yang tidak fasih dalam BISINDO. SIBI digunakan lebih luas dalam konteks pendidikan, pelatihan, dan komunikasi antara Tuli dan non-Tuli. SIBI lebih mudah dipahami oleh orang yang baru mengenal bahasa isyarat karena lebih mendekati struktur kalimat Bahasa Indonesia.
+
+Secara keseluruhan, BISINDO tetap lebih banyak digunakan di kalangan Tuli, tetapi SIBI memainkan peran penting dalam memfasilitasi inklusi sosial dan komunikasi antar komunitas yang lebih luas.</p>
     `,
   },
   {

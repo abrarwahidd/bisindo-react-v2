@@ -82,6 +82,13 @@ function Navbar() {
           >
             Tentang Kami
           </NavLink>
+          <Link
+            to="/hubungi-kami"
+            className="mobile-cta"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Hubungi Kami
+          </Link>
         </div>
 
         <div className="navbar-right">

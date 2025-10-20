@@ -39,6 +39,11 @@
   display: flex;
   gap: 3rem;
 }
+
+.navbar-center .mobile-cta {
+  display: none; /* Sembunyikan tombol ini di desktop */
+}
+
 .nav-link {
   font-family: "Poppins", sans-serif;
   font-size: 1rem;
@@ -144,17 +149,28 @@
     font-weight: 700;
   }
 
-  .mobile-cta {
-    display: inline-block;
-    margin-top: 2rem;
+  /* --- PERBAIKAN UTAMA DI SINI --- */
+
+  /* 1. Aturan untuk menampilkan tombol di dalam menu mobile */
+  .navbar-center .mobile-cta {
+    display: inline-block; /* Pastikan tombol ini terlihat */
+    margin-top: 0rem;
     padding: 0.8rem 2rem;
     font-size: 1.1rem;
     text-align: center;
+    /* Gunakan style tombol yang konsisten */
+    background-color: #3b82f6;
+    border-radius: 8px;
+    text-decoration: none;
+    color: white;
   }
 
+  /* 2. Aturan untuk menyembunyikan tombol di navbar kanan */
   .navbar-right .cta-button {
     display: none;
   }
+
+  /* --- AKHIR PERBAIKAN --- */
 
   .hamburger {
     display: flex;
@@ -182,10 +198,5 @@
 
   .hamburger.active .hamburger-bar:nth-child(3) {
     transform: translateY(-0.65rem) rotate(-45deg);
-  }
-
-  /* Aturan yang benar: Sembunyikan hanya di mobile */
-  .search-button {
-    display: none;
   }
 }

@@ -21,7 +21,7 @@ function BerandaPage() {
               Pelajari Bahasa Isyarat Lebih Menyenangkan
             </h1>
             <p className="animate-fade-in-up delay-1">
-              Platform edukasi interaktif untuk menguasai Bahasa Isyarat
+              Platform edukasi interaktif untuk menguasai Abjad Bahasa Isyarat
               Indonesia (BISINDO) dengan mudah dan percaya diri.
             </p>
             <div className="animate-fade-in-up delay-2">
@@ -57,11 +57,13 @@ function BerandaPage() {
           <div className="info-content animate-fade-in-up delay-1">
             {/* Hanya berisi paragraf */}
             <p>
-              BISINDO adalah bahasa isyarat yang tumbuh dan berkembang secara
-              alami di kalangan komunitas Tuli di Indonesia. Berbeda dengan SIBI
-              (Sistem Isyarat Bahasa Indonesia) yang merupakan isyarat buatan,
-              BISINDO memiliki keragaman dialek dan ekspresi yang kaya,
-              menjadikannya cerminan sejati dari budaya Tuli.
+              Bahasa Isyarat Indonesia (BISINDO) adalah bahasa visual yang
+              digunakan oleh teman-teman Tuli di Indonesia untuk berkomunikasi.
+              Berbeda dengan bahasa lisan yang mengandalkan suara, BISINDO
+              menggunakan gerakan tangan, ekspresi wajah, dan posisi tubuh
+              sebagai media utama penyampaian makna. Melalui kombinasi gerakan
+              tersebut, pengguna BISINDO dapat mengekspresikan kata, kalimat,
+              dan emosi dengan cara yang unik dan penuh makna.
             </p>
             <Link to="/tentang-bisindo" className="read-more-link">
               Baca Selengkapnya &rarr;
@@ -74,10 +76,10 @@ function BerandaPage() {
       <section className="quote-section">
         <div className="beranda-container">
           <p>
-            "Bahasa adalah jembatan, bukan tembok. Mari kita bangun lebih banyak
-            jembatan."
+            "Dengan memahami bahasa isyarat, kita membuka jendela untuk
+            berdialog tanpa batas suara."
           </p>
-          <span className="quote-author">- Lana Del Rey</span>
+          <span className="quote-author">- A</span>
         </div>
       </section>
     </div>

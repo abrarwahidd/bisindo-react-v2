@@ -239,23 +239,67 @@
 
 /* ===== Responsif ===== */
 @media (max-width: 768px) {
-  .visi-misi-container,
-  .pengembang-container {
-    flex-direction: column;
+  /* ===== Penyesuaian Header ===== */
+  .tentang-header {
+    padding: 5rem 1.5rem; /* Kurangi padding */
+  }
+
+  .tentang-header h1 {
+    font-size: 1.7rem;
+    max-width: none; /* Hapus batasan lebar agar bisa center dengan benar */
+  }
+
+  .tentang-header p {
+    font-size: 1rem;
+    line-height: 1.6;
+    max-width: none; /* Hapus batasan lebar */
+  }
+
+  /* ===== Penyesuaian Visi & Misi ===== */
+  .visi-misi-section {
+    padding: 4rem 1.5rem;
+  }
+  .visi-misi-container {
+    flex-direction: column; /* Tumpuk vertikal */
+    gap: 3rem;
+  }
+  .visi-misi-item {
     text-align: center;
   }
+  .visi-misi-item ul {
+    text-align: left; /* Biarkan list tetap rata kiri agar rapi */
+  }
+
+  /* ===== Penyesuaian Teknologi ===== */
+  .teknologi-section {
+    padding: 4rem 1.5rem;
+  }
+  .teknologi-section h2 {
+    font-size: 2.2rem;
+  }
+
+  /* ===== Penyesuaian Profil Pengembang ===== */
+  .pengembang-section {
+    padding: 4rem 1.5rem;
+  }
   .pengembang-container {
+    flex-direction: column; /* Tumpuk vertikal */
+    text-align: center;
     align-items: center;
+    gap: 2rem;
   }
   .profil-info {
     text-align: center;
   }
-  .tentang-header h1 {
-    font-size: 2.5rem;
+  .profil-info h3 {
+    font-size: 2rem;
   }
-  .visi-misi-section,
-  .teknologi-section,
-  .pengembang-section {
-    padding: 4rem 1.5rem;
+  .profil-links {
+    justify-content: center; /* Pusatkan link sosial media */
+    display: flex;
+    gap: 1.5rem;
+  }
+  .profil-links a {
+    margin-right: 0; /* Hapus margin kanan */
   }
 }
