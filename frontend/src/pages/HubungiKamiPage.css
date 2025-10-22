@@ -56,7 +56,7 @@
 }
 
 .icon-wrapper svg {
-  color: #4f46e5; /* Warna biru utama */
+  color: #4cbdd9; /* Warna biru utama */
   width: 36px;
   height: 36px;
 }
@@ -87,15 +87,14 @@
   border: none;
   cursor: pointer;
   /* background-image: linear-gradient(90deg, #4f46e5, #7c3aed); */
-  background-color: #3b82f6;
+  background-color: #4cbdd9;
   color: white;
-  box-shadow: 0 10px 20px -10px #7c3aed;
+  box-shadow: 0 10px 20px -10px #4cbdd9;
   transition: all 0.3s ease;
 }
 
 .email-button:hover {
   transform: translateY(-3px);
-  box-shadow: 0 10px 20px -5px #7c3aed;
 }
 
 /* ===== Bagian Sosial Media ===== */
@@ -130,13 +129,18 @@
   }
   .page-header h1 {
     font-size: 2rem;
-    margin-top: 3.5rem;
+    margin-top: 3.7rem;
   }
   .page-header p {
     font-size: 0.9rem;
+    margin-bottom: -0.5rem;
   }
   .info-section,
   .form-section {
     padding: 2rem;
+  }
+
+  .contact-card {
+    padding: 1.5rem;
   }
 }

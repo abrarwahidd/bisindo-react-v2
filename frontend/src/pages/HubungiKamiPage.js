@@ -39,7 +39,7 @@ function HubungiKamiPage() {
       </div>
 
       <div className="social-section">
-        <p>Atau temukan kami di media sosial</p>
+        <p>Atau temukan kami di</p>
         <div className="social-links-hubungi">
           <a href="#" aria-label="Instagram">
             <svg

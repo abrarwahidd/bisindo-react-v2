@@ -1,5 +1,4 @@
 # backend/main.py
-
 import cv2
 import joblib
 import mediapipe as mp

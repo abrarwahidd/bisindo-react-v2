@@ -2,7 +2,7 @@
 import React from "react";
 import "./TentangKamiPage.css";
 // Anda bisa menyiapkan foto profil di sini, contoh:
-// import profilePic from '../assets/images/profile.jpg';
+import profilePic from "../assets/images/logoo2.png";
 import logoReact from "../assets/images/logo-react2.png";
 import logoPython from "../assets/images/logo-python.png";
 import logoMl from "../assets/images/logo-ml.png";
@@ -125,13 +125,17 @@ function TentangKamiPage() {
         <div className="pengembang-container">
           <div className="profil-picture">
             {/* Ganti dengan tag <img> jika Anda punya foto */}
-            {/* <img src={profilePic} alt="[Nama Anda]" /> */}
+            <img src={profilePic} alt="[Nama Anda]" />
           </div>
           <div className="profil-info">
             <h2>Developer</h2>
             <h3>Abrar Wahid</h3>
             <h4>Mahasiswa Informatika | ML engineer / Web Developer</h4>
-            <p className="profil-bio">lorem ipsum dolor sir amet</p>
+            <p className="profil-bio">
+              seorang mahasiswa informatika yang memiliki ketertarikan besar di
+              bidang teknologi, khususnya machine learning, web development, dan
+              artificial intelligence (AI)
+            </p>
             <div className="profil-links">
               <a href="#" target="_blank" rel="noopener noreferrer">
                 LinkedIn

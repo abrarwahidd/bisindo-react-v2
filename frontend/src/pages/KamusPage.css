@@ -99,11 +99,12 @@
 }
 
 .kamus-tab-button:hover {
-  color: #3b82f6;
+  color: #ffffff;
+  background-color: #4cbdd9; /* Latar biru muda saat hover */
 }
 
 .kamus-tab-button.active {
-  color: #3b82f6;
+  color: #4cbdd9;
   background-color: #ffffff; /* Latar putih untuk tab aktif */
   font-weight: 600;
   box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.1);
@@ -186,10 +187,10 @@
 @media (max-width: 768px) {
   .kamus-page {
     padding: 1.5rem 1rem;
-    margin-top: 4rem;
+    margin-top: 2.5rem;
   }
   .kamus-header {
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.5rem;
   }
   .kamus-header h1 {
     font-size: 2.5rem;
