@@ -272,6 +272,8 @@ function BelajarPage() {
                   <ExamPane
                     instructionChar={currentInstructionChar}
                     feedback={feedback}
+                    onNextQuestion={generateNewQuestion}
+                    isCameraOn={isCameraOn}
                   />
                 )}
               </div>
