@@ -207,7 +207,7 @@ function BelajarPage() {
     return () => {
       stopCamera(); // Pastikan kamera dan koneksi berhenti saat pindah halaman
     };
-  }, []); // Hanya dijalankan sekali saat mount dan unmount
+  }, [stopCamera]); // Hanya dijalankan sekali saat mount dan unmount
 
   // Hook untuk menampilkan instruksi di mobile saat pertama kali buka
   useEffect(() => {

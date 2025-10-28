@@ -137,7 +137,11 @@ function TentangKamiPage() {
               artificial intelligence (AI)
             </p>
             <div className="profil-links">
-              <a href="#" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 LinkedIn
               </a>
               <a
