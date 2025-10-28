@@ -16,7 +16,7 @@ Website Signvision
 New note
 
 1. Ubah warna dan konsistensikan dengan warna #4cbdd9 (DONE)
-2. Ngumpulin data angka dan kosakata lalu masukkan ke web
+2. Ngumpulin data angka dan kosakata lalu masukkan ke web (DONE)
 3. Perbaiki tampilan belajar versi mobile
 4. Cek data data (teks, judul, artikel, dll)
 5. Perbaiki akurasi model

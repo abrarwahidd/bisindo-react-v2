@@ -1,13 +1,14 @@
 // src/pages/BelajarPage.js
-
 import React, { useState, useRef, useEffect } from "react";
-import "./BelajarPage.css";
-import VideoDisplay from "../components/VIdeoDisplay";
+import useWindowSize from "../hooks/useWindowSize"; // Pastikan path ini benar
+import "./BelajarPage.css"; // Pastikan CSS halaman belajar diimpor
+import VideoDisplay from "../components/VIdeoDisplay"; // Periksa nama file VideoDisplay.js
 import Controls from "../components/Controls";
 import Tabs from "../components/Tabs";
 import FreeDetectPane from "../components/FreeDetectPane";
 import ExamPane from "../components/ExamPane";
 import DictionaryPane from "../components/DictionaryPane";
+import InstructionModal from "../components/InstructionModal"; // Impor modal
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
@@ -20,17 +21,20 @@ function BelajarPage() {
     message: "Menunggu jawaban...",
     className: "feedback-text",
   });
+  const [showInstructions, setShowInstructions] = useState(false); // State untuk modal
 
-  // ... (semua state dan ref lainnya biarkan sama) ...
   const videoRef = useRef(null);
   const socketRef = useRef(null);
   const streamRef = useRef(null);
   const intervalRef = useRef(null);
   const nextQuestionTimerRef = useRef(null);
   const latestState = useRef({});
-  latestState.current = { activePane, currentInstructionChar, feedback };
+  latestState.current = { activePane, currentInstructionChar, feedback }; // Simpan state terbaru di ref
 
-  // ... (semua fungsi seperti startCamera, stopCamera, dll biarkan sama) ...
+  const { width } = useWindowSize();
+  const isMobile = width <= 768;
+
+  // --- Fungsi-fungsi ---
   const startCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
@@ -42,16 +46,21 @@ function BelajarPage() {
         videoRef.current.srcObject = stream;
       }
       setIsCameraOn(true);
+      // Panggil generateNewQuestion hanya jika memang di mode ujian
       if (latestState.current.activePane === "exam") {
         generateNewQuestion();
       }
-      socketRef.current = new WebSocket("ws://localhost:8000/ws");
+      socketRef.current = new WebSocket("ws://localhost:8000/ws"); // Ganti URL jika perlu
       socketRef.current.onopen = () => {
         console.log("WebSocket terhubung.");
-        intervalRef.current = setInterval(sendFrame, 100);
+        // Pastikan interval tidak dibuat ulang jika sudah ada
+        if (!intervalRef.current) {
+          intervalRef.current = setInterval(sendFrame, 100);
+        }
       };
       socketRef.current.onmessage = (event) => {
         const receivedPrediction = event.data;
+        // Gunakan state terbaru dari ref di dalam callback
         const {
           activePane: currentPane,
           currentInstructionChar: instruction,
@@ -60,14 +69,21 @@ function BelajarPage() {
         if (currentPane === "exam") {
           checkAnswer(receivedPrediction, instruction, currentFeedback);
         } else {
-          setPrediction(receivedPrediction);
+          setPrediction(receivedPrediction); // Update state prediksi
         }
       };
-      socketRef.current.onclose = () => console.log("WebSocket terputus.");
+      socketRef.current.onclose = () => {
+        console.log("WebSocket terputus.");
+        // Hentikan interval saat koneksi ditutup
+        if (intervalRef.current) {
+          clearInterval(intervalRef.current);
+          intervalRef.current = null;
+        }
+      };
       socketRef.current.onerror = (error) => {
         console.error("WebSocket error:", error);
         alert("Koneksi ke server gagal. Pastikan server backend berjalan.");
-        stopCamera();
+        stopCamera(); // Hentikan kamera jika ada error koneksi
       };
     } catch (err) {
       console.error("Error mengakses kamera:", err);
@@ -78,24 +94,40 @@ function BelajarPage() {
   const stopCamera = () => {
     if (streamRef.current) {
       streamRef.current.getTracks().forEach((track) => track.stop());
+      streamRef.current = null; // Set ke null setelah dihentikan
     }
     if (videoRef.current) {
       videoRef.current.srcObject = null;
     }
     setIsCameraOn(false);
-    if (intervalRef.current) clearInterval(intervalRef.current);
-    if (socketRef.current) socketRef.current.close();
-    if (nextQuestionTimerRef.current)
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null; // Set ke null setelah dihentikan
+    }
+    if (socketRef.current) {
+      socketRef.current.close();
+      socketRef.current = null; // Set ke null setelah ditutup
+    }
+    if (nextQuestionTimerRef.current) {
       clearTimeout(nextQuestionTimerRef.current);
+      nextQuestionTimerRef.current = null;
+    }
     setPrediction("-");
     resetExamState();
   };
 
   const sendFrame = () => {
-    if (!socketRef.current || socketRef.current.readyState !== WebSocket.OPEN)
+    // Pastikan semua referensi valid sebelum mengirim frame
+    if (
+      !socketRef.current ||
+      socketRef.current.readyState !== WebSocket.OPEN ||
+      !videoRef.current ||
+      videoRef.current.paused ||
+      videoRef.current.ended ||
+      videoRef.current.readyState < 3
+    ) {
       return;
-    if (!videoRef.current || videoRef.current.paused || videoRef.current.ended)
-      return;
+    }
     const canvas = document.createElement("canvas");
     canvas.width = videoRef.current.videoWidth;
     canvas.height = videoRef.current.videoHeight;
@@ -103,7 +135,14 @@ function BelajarPage() {
     context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
     canvas.toBlob(
       (blob) => {
-        if (blob) socketRef.current.send(blob);
+        // Periksa lagi koneksi sebelum mengirim
+        if (
+          blob &&
+          socketRef.current &&
+          socketRef.current.readyState === WebSocket.OPEN
+        ) {
+          socketRef.current.send(blob);
+        }
       },
       "image/jpeg",
       0.8
@@ -120,11 +159,16 @@ function BelajarPage() {
   };
 
   const checkAnswer = (predictedChar, currentInstruction, currentFeedback) => {
-    if (currentFeedback.className === "feedback-text correct") return;
-    if (!currentInstruction || currentInstruction === "?") return;
+    // Gunakan state langsung jika memungkinkan, fallback ke ref jika perlu
+    const instruction =
+      currentInstruction || latestState.current.currentInstructionChar;
+    const feedbackState = currentFeedback || latestState.current.feedback;
+
+    if (feedbackState.className === "feedback-text correct") return;
+    if (!instruction || instruction === "?") return;
     if (predictedChar === "Tidak Terdeteksi") return;
 
-    if (predictedChar.toUpperCase() === currentInstruction.toUpperCase()) {
+    if (predictedChar.toUpperCase() === instruction.toUpperCase()) {
       setFeedback({ message: "Benar!", className: "feedback-text correct" });
       nextQuestionTimerRef.current = setTimeout(() => {
         generateNewQuestion();
@@ -143,58 +187,134 @@ function BelajarPage() {
   };
 
   const handleTabSwitch = (pane) => {
-    if (pane === "dictionary" && isCameraOn) {
+    // Hanya stop kamera di desktop saat pindah ke kamus
+    if (pane === "dictionary" && isCameraOn && !isMobile) {
       stopCamera();
     }
     setActivePane(pane);
+    // Jika beralih ke mode ujian saat kamera sudah nyala
     if (pane === "exam" && isCameraOn) {
       generateNewQuestion();
     } else if (activePane === "exam" && pane !== "exam") {
+      // Reset jika beralih DARI mode ujian
       resetExamState();
     }
   };
 
+  // --- Hooks ---
   useEffect(() => {
+    // Cleanup effect utama saat komponen dilepas
     return () => {
-      if (socketRef.current) socketRef.current.close();
-      if (streamRef.current)
-        streamRef.current.getTracks().forEach((track) => track.stop());
-      if (nextQuestionTimerRef.current)
-        clearTimeout(nextQuestionTimerRef.current);
+      stopCamera(); // Pastikan kamera dan koneksi berhenti saat pindah halaman
     };
-  }, []);
+  }, []); // Hanya dijalankan sekali saat mount dan unmount
 
+  // Hook untuk menampilkan instruksi di mobile saat pertama kali buka
+  useEffect(() => {
+    if (isMobile) {
+      setShowInstructions(true);
+      // Hapus penyimpanan ke sessionStorage
+      // sessionStorage.setItem('hasSeenLearnInstructions', 'true');
+    } else {
+      // Opsional: Pastikan modal tidak muncul jika beralih dari mobile ke desktop
+      setShowInstructions(false);
+    }
+  }, [isMobile]);
+
+  // Fungsi untuk menutup modal
+  const handleCloseInstructions = () => {
+    setShowInstructions(false);
+  };
+
+  // --- Render ---
+
+  // Tampilan khusus MOBILE
+  if (isMobile) {
+    return (
+      <div
+        className={`belajar-mobile-wrapper ${
+          activePane === "dictionary" ? "dictionary-mode" : ""
+        }`}
+      >
+        {showInstructions && (
+          <InstructionModal onClose={handleCloseInstructions} />
+        )}
+
+        {activePane !== "dictionary" ? (
+          <>
+            {/* 1. Kontainer untuk Tabs (paling atas) */}
+            <div className="mobile-tabs-container">
+              <Tabs activePane={activePane} onTabSwitch={handleTabSwitch} />
+            </div>
+
+            {/* 2. Kontainer untuk Tombol Kamera */}
+            <div className="mobile-controls-container">
+              <Controls
+                onStart={startCamera}
+                onStop={stopCamera}
+                isCameraOn={isCameraOn}
+              />
+            </div>
+
+            {/* 3. Area Tampilan Utama (Video + Hasil) */}
+            <div className="mobile-display-unit">
+              <div className="video-panel-mobile">
+                <VideoDisplay ref={videoRef} />
+              </div>
+              <div className="info-pane-mobile">
+                {activePane === "free-detect" && (
+                  <FreeDetectPane prediction={prediction} />
+                )}
+                {activePane === "exam" && (
+                  <ExamPane
+                    instructionChar={currentInstructionChar}
+                    feedback={feedback}
+                  />
+                )}
+              </div>
+            </div>
+          </>
+        ) : (
+          // Tampilan Kamus
+          <div className="dictionary-pane-mobile">
+            <Tabs activePane={activePane} onTabSwitch={handleTabSwitch} />
+            <DictionaryPane />
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // Tampilan khusus DESKTOP (Struktur Asli)
   return (
-    // Class dinamis ini akan mengontrol semua animasi
     <div
       className={`belajar-workspace ${
         activePane === "dictionary" ? "dictionary-mode" : ""
       }`}
     >
-      {/* Kolom Kiri: Tampilan Video (SEKARANG SELALU ADA) */}
       <div className="video-panel">
         <VideoDisplay ref={videoRef} />
       </div>
-
-      {/* Kolom Kanan: Panel Kontrol & Informasi */}
       <div className="control-panel">
-        {/* Header dan Kontrol Kamera (SEKARANG DIKONTROL OLEH CSS) */}
-        <div className="control-panel-main-content">
-          <div className="control-panel-header">
-            <h2>Ruang Belajar Abjad Interaktif</h2>
-            <p>
-              Nyalakan kamera dan pilih mode untuk memulai sesi belajar Anda.
-            </p>
-          </div>
-          <Controls
-            onStart={startCamera}
-            onStop={stopCamera}
-            isCameraOn={isCameraOn}
-          />
+        <div className="control-panel-header">
+          <h2>Ruang Belajar Abjad Interaktif</h2>
+          <p>Nyalakan kamera dan pilih mode untuk memulai sesi belajar Anda.</p>
         </div>
-
+        <Controls
+          onStart={startCamera}
+          onStop={stopCamera}
+          isCameraOn={isCameraOn}
+        />
         <Tabs activePane={activePane} onTabSwitch={handleTabSwitch} />
-
+        {/* Konten kamus di desktop */}
+        {activePane === "dictionary" && (
+          <div className="dictionary-pane-desktop-wrapper">
+            <DictionaryPane />
+          </div>
+        )}
+      </div>
+      {/* Panel Hasil hanya ditampilkan jika bukan mode kamus */}
+      {activePane !== "dictionary" && (
         <div className="info-pane">
           {activePane === "free-detect" && (
             <FreeDetectPane prediction={prediction} />
@@ -207,9 +327,8 @@ function BelajarPage() {
               isCameraOn={isCameraOn}
             />
           )}
-          {activePane === "dictionary" && <DictionaryPane />}
         </div>
-      </div>
+      )}
     </div>
   );
 }
