@@ -50,7 +50,9 @@ function BelajarPage() {
       if (latestState.current.activePane === "exam") {
         generateNewQuestion();
       }
-      socketRef.current = new WebSocket("ws://localhost:8000/ws"); // Ganti URL jika perlu
+      socketRef.current = new WebSocket(
+        "wss://bisindo-react-v2-production.up.railway.app/ws"
+      ); // Ganti URL jika perlu
       socketRef.current.onopen = () => {
         console.log("WebSocket terhubung.");
         // Pastikan interval tidak dibuat ulang jika sudah ada
