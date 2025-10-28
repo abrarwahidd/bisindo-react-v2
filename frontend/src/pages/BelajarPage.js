@@ -1,5 +1,5 @@
 // src/pages/BelajarPage.js
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import useWindowSize from "../hooks/useWindowSize"; // Pastikan path ini benar
 import "./BelajarPage.css"; // Pastikan CSS halaman belajar diimpor
 import VideoDisplay from "../components/VIdeoDisplay"; // Periksa nama file VideoDisplay.js
@@ -91,30 +91,31 @@ function BelajarPage() {
     }
   };
 
-  const stopCamera = () => {
+  const stopCamera = useCallback(() => {
+    // <-- Bungkus dengan useCallback
     if (streamRef.current) {
       streamRef.current.getTracks().forEach((track) => track.stop());
-      streamRef.current = null; // Set ke null setelah dihentikan
+      streamRef.current = null;
     }
     if (videoRef.current) {
       videoRef.current.srcObject = null;
     }
-    setIsCameraOn(false);
+    setIsCameraOn(false); // Pastikan setIsCameraOn ada di dalam jika perlu
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
-      intervalRef.current = null; // Set ke null setelah dihentikan
+      intervalRef.current = null;
     }
     if (socketRef.current) {
       socketRef.current.close();
-      socketRef.current = null; // Set ke null setelah ditutup
+      socketRef.current = null;
     }
     if (nextQuestionTimerRef.current) {
       clearTimeout(nextQuestionTimerRef.current);
       nextQuestionTimerRef.current = null;
     }
-    setPrediction("-");
-    resetExamState();
-  };
+    setPrediction("-"); // Pastikan setPrediction ada di dalam jika perlu
+    resetExamState(); // Pastikan resetExamState ada di dalam jika perlu
+  }, []); // <-- Tambahkan dependency array kosong
 
   const sendFrame = () => {
     // Pastikan semua referensi valid sebelum mengirim frame
