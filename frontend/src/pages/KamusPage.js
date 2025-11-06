@@ -13,10 +13,21 @@ const KamusItem = ({ item }) => {
     <div className="kamus-item">
       <div className="item-media">
         {item.imageUrl && (
-          <img src={item.imageUrl} alt={item.char || item.term} />
+          <img
+            src={item.imageUrl}
+            alt={item.char || item.term}
+            loading="lazy" /* <-- 1. TAMBAHKAN INI UNTUK GAMBAR */
+          />
         )}
         {item.videoUrl && (
-          <video key={item.videoUrl} autoPlay loop muted playsInline>
+          <video
+            key={item.videoUrl}
+            loop
+            muted
+            playsInline
+            controls
+            preload="none" /* <-- 2. TAMBAHKAN INI UNTUK VIDEO */
+          >
             <source src={item.videoUrl} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
