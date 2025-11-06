@@ -26,7 +26,7 @@ const KamusItem = ({ item }) => {
             muted
             playsInline
             controls
-            preload="none" /* <-- 2. TAMBAHKAN INI UNTUK VIDEO */
+            preload="metadata" /* <-- 2. TAMBAHKAN INI UNTUK VIDEO */
           >
             <source src={item.videoUrl} type="video/mp4" />
             Your browser does not support the video tag.
