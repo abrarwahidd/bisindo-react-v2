@@ -148,7 +148,7 @@ function BelajarPage() {
         }
       },
       "image/jpeg",
-      0.8
+      0.5
     );
   };
 
