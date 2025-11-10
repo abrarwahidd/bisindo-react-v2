@@ -57,7 +57,7 @@ function BelajarPage() {
         console.log("WebSocket terhubung.");
         // Pastikan interval tidak dibuat ulang jika sudah ada
         if (!intervalRef.current) {
-          intervalRef.current = setInterval(sendFrame, 100);
+          intervalRef.current = setInterval(sendFrame, 250);
         }
       };
       socketRef.current.onmessage = (event) => {
