@@ -43,8 +43,8 @@ function Navbar() {
             className="navbar-brand"
             onClick={() => setIsMenuOpen(false)}
           >
-            <img src={siteLogo} alt="SignVision Logo" className="navbar-logo" />
-            <span>SignVision</span> {/* Bungkus teks dengan span */}
+            <img src={siteLogo} alt="Bvision Logo" className="navbar-logo" />
+            <span>Bvision</span> {/* Bungkus teks dengan span */}
           </Link>
         </div>
 

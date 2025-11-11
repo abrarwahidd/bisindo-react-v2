@@ -9,7 +9,7 @@ function Footer() {
       <div className="footer-container">
         {/* Kolom 1: Branding */}
         <div className="footer-col">
-          <h3 className="footer-brand">SignVision</h3>
+          <h3 className="footer-brand">Bvision</h3>
           <p className="footer-tagline">
             Membangun jembatan komunikasi melalui Bahasa Isyarat Indonesia.
           </p>
@@ -98,7 +98,7 @@ function Footer() {
 
       <div className="footer-bottom">
         <p>
-          &copy; {new Date().getFullYear()} SignVision. IF UNMA X SLB B YPLB
+          &copy; {new Date().getFullYear()} Bvision. IF UNMA X SLB B YPLB
           Majalengka.
         </p>
       </div>
