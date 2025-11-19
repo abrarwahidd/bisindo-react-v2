@@ -129,10 +129,10 @@ function TentangKamiPage() {
           </div>
           <div className="profil-info">
             <h2>Developer</h2>
-            <h3>Abrar Wahid | Wildan ZHilal Manafi | Ibnu Restu Pamungkas</h3>
+            <h3>Abrar | Wildan | Ibnu</h3>
             <h4>AI/ML engineer | Software Engineerr | Content & Research</h4>
             <p className="profil-bio">
-              seorang mahasiswa informatika yang memiliki ketertarikan besar di
+              Mahasiswa informatika yang memiliki ketertarikan besar di
               bidang teknologi, khususnya machine learning, web development, dan
               artificial intelligence (AI)
             </p>
