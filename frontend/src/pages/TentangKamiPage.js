@@ -2,7 +2,7 @@
 import React from "react";
 import "./TentangKamiPage.css";
 // Anda bisa menyiapkan foto profil di sini, contoh:
-import profilePic from "../assets/images/logoo2.png";
+import profilePic from "../assets/images/LOGO-D.png";
 import logoReact from "../assets/images/logo-react2.png";
 import logoPython from "../assets/images/logo-python.png";
 import logoMl from "../assets/images/logo-ml.png";
@@ -129,8 +129,8 @@ function TentangKamiPage() {
           </div>
           <div className="profil-info">
             <h2>Developer</h2>
-            <h3>Abrar Wahid</h3>
-            <h4>Mahasiswa Informatika | ML engineer / Web Developer</h4>
+            <h3>Abrar Wahid | Wildan ZHilal Manafi | Ibnu Restu Pamungkas</h3>
+            <h4>AI/ML engineer | Software Engineerr | Content & Research</h4>
             <p className="profil-bio">
               seorang mahasiswa informatika yang memiliki ketertarikan besar di
               bidang teknologi, khususnya machine learning, web development, dan
