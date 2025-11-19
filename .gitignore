@@ -1,5 +1,5 @@
 # Folder Virtual Environment di dalam backend
-backend/venvr2/
+backend/myenv/
 
 # Folder dependencies frontend
 frontend/node_modules/

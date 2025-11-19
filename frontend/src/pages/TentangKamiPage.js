@@ -14,7 +14,7 @@ function TentangKamiPage() {
       <section className="tentang-header">
         <h1>Menghubungkan Dunia, Satu Isyarat demi Satu Isyarat</h1>
         <p>
-          Bvision lahir dari keyakinan bahwa teknologi dapat menjadi jembatan
+          Dewantara lahir dari keyakinan bahwa teknologi dapat menjadi jembatan
           untuk komunikasi yang lebih inklusif.
         </p>
       </section>
