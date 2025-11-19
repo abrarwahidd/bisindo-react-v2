@@ -2,7 +2,7 @@
 import React from "react";
 import "./TentangKamiPage.css";
 // Anda bisa menyiapkan foto profil di sini, contoh:
-import profilePic from "../assets/images/LOGO-D.png";
+import profilePic from "../assets/images/logoo2.png";
 import logoReact from "../assets/images/logo-react2.png";
 import logoPython from "../assets/images/logo-python.png";
 import logoMl from "../assets/images/logo-ml.png";
@@ -14,7 +14,7 @@ function TentangKamiPage() {
       <section className="tentang-header">
         <h1>Menghubungkan Dunia, Satu Isyarat demi Satu Isyarat</h1>
         <p>
-          Dewantara lahir dari keyakinan bahwa teknologi dapat menjadi jembatan
+          Bvision lahir dari keyakinan bahwa teknologi dapat menjadi jembatan
           untuk komunikasi yang lebih inklusif.
         </p>
       </section>
@@ -129,10 +129,10 @@ function TentangKamiPage() {
           </div>
           <div className="profil-info">
             <h2>Developer</h2>
-            <h3>Abrar | Wildan | Ibnu</h3>
-            <h4>AI/ML engineer | Software Engineerr | Content & Research</h4>
+            <h3>Abrar Wahid</h3>
+            <h4>Mahasiswa Informatika | ML engineer / Web Developer</h4>
             <p className="profil-bio">
-              Mahasiswa informatika yang memiliki ketertarikan besar di
+              seorang mahasiswa informatika yang memiliki ketertarikan besar di
               bidang teknologi, khususnya machine learning, web development, dan
               artificial intelligence (AI)
             </p>
