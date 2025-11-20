@@ -130,7 +130,7 @@ function TentangKamiPage() {
           <div className="profil-info">
             <h2>Developer</h2>
             <h3>Abrar Wahid</h3>
-            <h4>Mahasiswa Informatika | ML engineer / Web Developer</h4>
+            <h4>Mahasiswa Informatika | AI/ML engineer & Software engineer</h4>
             <p className="profil-bio">
               seorang mahasiswa informatika yang memiliki ketertarikan besar di
               bidang teknologi, khususnya machine learning, web development, dan
