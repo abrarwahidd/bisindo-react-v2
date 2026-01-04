@@ -1,10 +1,11 @@
+/* src/pages/KamusPage.css */
+
 .kamus-page {
   width: 100%;
   max-width: 1200px;
   padding: 3rem 2rem;
   margin: 0 auto;
   margin-top: 2.5rem;
-  /* 1. Tambahkan Latar Belakang Gradien Halus */
   background: linear-gradient(180deg, #f7f9ff 0%, #ffffff 25%);
 }
 
@@ -18,7 +19,6 @@
   border-radius: 20px;
 }
 
-/* 2. Hiasan dibuat sedikit lebih terlihat */
 .kamus-header::before {
   content: "";
   position: absolute;
@@ -31,7 +31,7 @@
   left: -40px;
   transform: translateY(-50%) rotate(-15deg);
   z-index: 0;
-  opacity: 1; /* Dibuat lebih jelas */
+  opacity: 1;
 }
 
 .kamus-header::after {
@@ -46,7 +46,7 @@
   right: -40px;
   z-index: 0;
   transform: rotate(15deg);
-  opacity: 1; /* Dibuat lebih jelas */
+  opacity: 1;
 }
 
 .kamus-header h1,
@@ -70,15 +70,14 @@
   line-height: 1.7;
 }
 
-/* ===== 3. Desain Ulang Tabs Navigasi ===== */
+/* ===== Tabs Navigasi ===== */
 .kamus-tabs {
-  display: inline-flex; /* Agar lebar sesuai konten */
+  display: inline-flex;
   justify-content: center;
   margin-bottom: 3.5rem;
-  background-color: #f1f5f9; /* Latar abu-abu untuk kontainer tab */
-  border-radius: 50px; /* Bentuk kapsul */
+  background-color: #f1f5f9;
+  border-radius: 50px;
   padding: 0.5rem;
-  /* Pusatkan kontainer tab */
   left: 50%;
   transform: translateX(-50%);
   position: relative;
@@ -86,7 +85,7 @@
 
 .kamus-tab-button {
   font-family: "Poppins", sans-serif;
-  font-weight: 500; /* Sedikit lebih tipis */
+  font-weight: 500;
   font-size: 1rem;
   padding: 0.75rem 1.5rem;
   border: none;
@@ -94,18 +93,18 @@
   cursor: pointer;
   color: #475569;
   position: relative;
-  border-radius: 30px; /* Bentuk kapsul */
+  border-radius: 30px;
   transition: all 0.3s ease;
 }
 
 .kamus-tab-button:hover {
   color: #ffffff;
-  background-color: #4cbdd9; /* Latar biru muda saat hover */
+  background-color: #4cbdd9;
 }
 
 .kamus-tab-button.active {
   color: #4cbdd9;
-  background-color: #ffffff; /* Latar putih untuk tab aktif */
+  background-color: #ffffff;
   font-weight: 600;
   box-shadow: 0 4px 10px -2px rgba(0, 0, 0, 0.1);
 }
@@ -117,19 +116,18 @@
   gap: 1.8rem;
 }
 
-/* ===== 4. Desain Ulang Kartu dengan Efek Border Gradien ===== */
+/* ===== Kartu Item ===== */
 .kamus-item {
-  position: relative; /* Diperlukan untuk border gradien */
+  position: relative;
   background-color: #ffffff;
   border-radius: 16px;
-  padding: 3px; /* Jarak untuk border */
+  padding: 3px;
   text-align: center;
   transition: transform 0.3s ease;
   cursor: pointer;
-  box-shadow: 0 4px 15px -5px rgba(59, 130, 246, 0.4); /* Tambahkan bayangan halus */
+  box-shadow: 0 4px 15px -5px rgba(59, 130, 246, 0.4);
 }
 
-/* Lapisan gradien di belakang */
 .kamus-item::before {
   content: "";
   position: absolute;
@@ -140,7 +138,7 @@
   border-radius: 16px;
   background: linear-gradient(135deg, #3b82f6, #34d399);
   z-index: 0;
-  opacity: 0; /* Awalnya transparan */
+  opacity: 0;
   transition: opacity 0.3s ease;
 }
 
@@ -148,30 +146,38 @@
   transform: translateY(-5px);
 }
 .kamus-item:hover::before {
-  opacity: 1; /* Tampilkan gradien saat hover */
+  opacity: 1;
 }
 
-/* Konten kartu (media & label) harus berada di atas lapisan gradien */
 .item-media,
 .item-label {
   position: relative;
   z-index: 1;
-  background-color: #ffffff; /* Pastikan konten punya latar putih */
+  background-color: #ffffff;
 }
 
 .item-media {
   width: 100%;
   aspect-ratio: 1 / 1;
-  border-top-left-radius: 14px; /* Sudut sedikit lebih kecil dari induk */
+  border-top-left-radius: 14px;
   border-top-right-radius: 14px;
   overflow: hidden;
 }
+
 .item-media img,
 .item-media video {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
+
+/* [PENTING] Mematikan pointer events pada gambar kecil di grid 
+   agar klik selalu ditangkap oleh .kamus-item (pembungkusnya) */
+.kamus-item .item-media img,
+.kamus-item .item-media video {
+  pointer-events: none;
+}
+
 .item-label {
   font-family: "Poppins", sans-serif;
   font-size: 1.4rem;
@@ -183,7 +189,110 @@
   border-bottom-right-radius: 14px;
 }
 
-/* ===== Responsif untuk Mobile ===== */
+/* --- BAGIAN MODAL (YANG DIPERBAIKI) --- */
+
+/* 1. Latar Belakang Gelap */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85); /* Gelap pekat */
+  display: flex; /* Pakai Flexbox */
+  justify-content: center; /* Posisi Tengah Horizontal */
+  align-items: center; /* Posisi Tengah Vertikal */
+  z-index: 99999; /* Paling depan */
+}
+
+/* 2. Kotak Putih Konten */
+.modal-content {
+  background-color: #ffffff;
+  width: 90%;
+  max-width: 500px;
+  padding: 2rem;
+  border-radius: 16px;
+  position: relative;
+  
+  /* HAPUS SEMUA ANIMASI RIBET DISINI */
+  opacity: 1 !important; 
+  visibility: visible !important;
+  transform: none !important;
+  
+  /* Agar terlihat jelas */
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Tombol Close */
+.modal-close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+}
+
+.modal-close-btn:hover {
+  background: #ef4444;
+  color: white;
+}
+
+/* Gambar/Video di dalam Modal */
+.modal-body {
+  width: 100%;
+  text-align: center;
+}
+
+.modal-image, 
+.modal-video {
+  width: 100%;
+  max-height: 350px; /* Batasi tinggi agar tidak terlalu besar */
+  object-fit: contain;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  background-color: #f1f5f9;
+}
+
+/* Pastikan video controls bisa diklik di dalam modal */
+.modal-content video, 
+.modal-content img {
+  pointer-events: auto !important;
+}
+
+.modal-text h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #1e293b;
+}
+
+.modal-text p {
+  color: #64748b;
+  line-height: 1.5;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Responsif Mobile */
 @media (max-width: 768px) {
   .kamus-page {
     padding: 1.5rem 1rem;
@@ -195,25 +304,15 @@
   .kamus-header h1 {
     font-size: 2.5rem;
   }
-  .kamus-header p {
-    font-size: 1rem;
-  }
-  .kamus-tabs {
-    margin-bottom: 2rem;
-  }
-  .kamus-tab-button {
-    padding: 0.8rem;
-    font-size: 0.9rem;
-  }
   .kamus-grid {
-    grid-template-columns: repeat(
-      auto-fill,
-      minmax(130px, 1fr)
-    ); /* 2-3 kolom di mobile */
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     gap: 1rem;
   }
-  .item-label {
-    font-size: 1.1rem;
-    padding: 1rem;
+  .modal-content {
+    padding: 1.5rem;
+    width: 90%;
+  }
+  .modal-text h2 {
+    font-size: 2rem;
   }
 }

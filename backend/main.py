@@ -1,4 +1,4 @@
-# backend/main.py
+#import library 
 import cv2
 import joblib
 import mediapipe as mp
@@ -7,85 +7,101 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import HTMLResponse
 import asyncio
 
-# Inisialisasi aplikasi FastAPI
+#konfigurasi
+MODEL_PATH = 'models/3bisindo_model.pkl'
+SCALER_PATH = 'models/3scaler.pkl'
+NUM_FEATURES = 84 # untuk input yaitu 84 fitur (2 tangan * 21 landmark * 2 koordinat)
+
+#bikin class untuk proses logika
+class SignLanguageDetector:
+    def __init__(self):
+        self.model = self.load_file(MODEL_PATH)
+        self.scaler = self.load_file(SCALER_PATH)
+
+        #inisialisasi MediaPipe
+        self.mp_hands = mp.solutions.hands
+        self.hands = self.mp_hands.Hands(
+            static_image_mode=False,
+            max_num_hands=2,
+            min_detection_confidence=0.5,
+            min_tracking_confidence=0.5
+        )
+
+    def load_file(self, path):
+        try:
+            return joblib.load(path)
+        except FileNotFoundError:
+            print(f"Error: File tidak ditemukan - {path}")
+            exit()
+    
+    def process_image(self, image_bytes):
+        #ubah bytes ke gambar OpenCV
+        nparr = np.frombuffer(image_bytes, np.uint8)
+        frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+
+        if frame is None:
+            return None, None
+        
+        #konversi ke RGB
+        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        results = self.hands.process(frame_rgb)
+        return results, frame
+    
+    def extract_features(self, results):
+        #ambil koordinat dan lakukan padding
+        if not results.multi_hand_landmarks:
+            return None
+        
+        all_landmakrs = []
+        for hand_landmarks in results.multi_hand_landmarks:
+            for lm in hand_landmarks.landmark:
+                all_landmakrs.extend([lm.x, lm.y])
+
+        #logika padding (tambah 0 jika kurang dari 84 fitur)
+        if len(all_landmakrs) < NUM_FEATURES:
+            padding = [0.0] * (NUM_FEATURES - len(all_landmakrs))
+            all_landmakrs.extend(padding)
+        
+        return all_landmakrs
+    
+    def predict(self, image_bytes):
+        #fungsi utama yang di call websocket
+        results, _ = self.process_image(image_bytes)
+
+        if not results:
+            return "Tidak Terdeteksi"
+        
+        features = self.extract_features(results)
+
+        if features and len(features) == NUM_FEATURES:
+            features_np = np.array(features).reshape(1, -1) #rapihkan fitur
+            scaled_data = self.scaler.transform(features_np) #standarisasi fitur
+            prediction = self.model.predict(scaled_data) #lakukan prediksi
+            return prediction[0]
+        
+        return "Tidak Terdeteksi"
+    
+# Inisialisasi FastAPI
 app = FastAPI()
+detector = SignLanguageDetector() #objek detektor
 
-# Muat model dan scaler yang sudah dilatih
-# Pastikan file-file ini berada di direktori yang sama dengan main.py
-try:
-    model = joblib.load('models/3bisindo_model.pkl')
-    scaler = joblib.load('models/3scaler.pkl')
-    print("Model dan scaler berhasil dimuat.")
-except FileNotFoundError:
-    print("Error: Pastikan file '3bisindo_model.pkl' dan '3scaler.pkl' ada di folder backend.")
-    exit()
-
-
-# Inisialisasi MediaPipe Hands
-mp_hands = mp.solutions.hands
-hands = mp_hands.Hands(
-    static_image_mode=False,
-    max_num_hands=2,  # Deteksi hingga 2 tangan
-    min_detection_confidence=0.5,
-    min_tracking_confidence=0.5
-)
-mp_draw = mp.solutions.drawing_utils
-
-# Definisikan endpoint WebSocket
-
-
+#endpoint websocket
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
-    print("Klien terhubung.")
+    print("frontend terhubung.")
     try:
         while True:
-            # Menerima data frame gambar dari klien sebagai bytes
+            # terima data frame gambar dari frontend sebagai bytes
             data = await websocket.receive_bytes()
 
-            # Dekode data bytes menjadi gambar OpenCV
-            nparr = np.frombuffer(data, np.uint8)
-            frame = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
+            # lakukan prediksi
+            hasil_prediksi = detector.predict(data)
 
-            if frame is None:
-                continue
+            #kirim hasil prediksi ke frontend
+            await websocket.send_text(str(hasil_prediksi))
 
-            # Proses gambar dengan MediaPipe
-            frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-            results = hands.process(frame_rgb)
-
-            prediction = "Tidak Terdeteksi"
-
-            if results.multi_hand_landmarks:
-                all_landmarks = []
-
-                # Ekstrak landmark dari semua tangan yang terdeteksi (maksimal 2)
-                for hand_landmarks in results.multi_hand_landmarks:
-                    for lm in hand_landmarks.landmark:
-                        # Hanya gunakan koordinat x dan y, sesuai dengan data training
-                        all_landmarks.extend([lm.x, lm.y])
-
-                # Padding jika hanya satu tangan yang terdeteksi
-                # Model dilatih dengan 84 fitur (2 tangan * 21 landmark * 2 koordinat)
-                num_features = 84
-                if len(all_landmarks) < num_features:
-                    padding = [0.0] * (num_features - len(all_landmarks))
-                    all_landmarks.extend(padding)
-
-                # Pastikan jumlah fitur sesuai sebelum prediksi
-                if len(all_landmarks) == num_features:
-                    # Ubah menjadi numpy array dan lakukan scaling
-                    input_data = np.array(all_landmarks).reshape(1, -1)
-                    scaled_data = scaler.transform(input_data)
-
-                    # Lakukan prediksi
-                    pred = model.predict(scaled_data)
-                    prediction = pred
-
-            # Kirim hasil prediksi kembali ke klien
-            await websocket.send_text(prediction)
-
-            # Tambahkan jeda singkat untuk mencegah server overload
+            #jeda singkat untuk mencegah overload server
             await asyncio.sleep(0.01)
 
     except WebSocketDisconnect:
@@ -93,8 +109,8 @@ async def websocket_endpoint(websocket: WebSocket):
     except Exception as e:
         print(f"Terjadi error: {e}")
     finally:
-        # Pastikan koneksi ditutup dengan baik
         await websocket.close()
 
+            
 
-# uvicorn main:app --host 0.0.0.0 --port 8000 for running the server
+#for running : uvicorn main:app --host 0.0.0.0 --port 8000

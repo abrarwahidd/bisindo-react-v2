@@ -1,20 +1,20 @@
 // src/pages/BelajarPage.js
 import React, { useState, useRef, useEffect, useCallback } from "react";
-import useWindowSize from "../hooks/useWindowSize"; // Pastikan path ini benar
-import "./BelajarPage.css"; // Pastikan CSS halaman belajar diimpor
-import VideoDisplay from "../components/VIdeoDisplay"; // Periksa nama file VideoDisplay.js
+import useWindowSize from "../hooks/useWindowSize"; 
+import "./BelajarPage.css"; 
+import VideoDisplay from "../components/VIdeoDisplay"; 
 import Controls from "../components/Controls";
 import Tabs from "../components/Tabs";
 import FreeDetectPane from "../components/FreeDetectPane";
 import ExamPane from "../components/ExamPane";
 import DictionaryPane from "../components/DictionaryPane";
-import InstructionModal from "../components/InstructionModal"; // Impor modal
+import InstructionModal from "../components/InstructionModal"; 
 
 const ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
 function BelajarPage() {
-  const [isCameraOn, setIsCameraOn] = useState(false);
-  const [prediction, setPrediction] = useState("-");
+  const [isCameraOn, setIsCameraOn] = useState(false); //state untuk status kamera
+  const [prediction, setPrediction] = useState("-"); //hasil prediksi dari backend
   const [activePane, setActivePane] = useState("free-detect");
   const [currentInstructionChar, setCurrentInstructionChar] = useState("?");
   const [feedback, setFeedback] = useState({
@@ -51,11 +51,11 @@ function BelajarPage() {
         generateNewQuestion();
       }
       socketRef.current = new WebSocket(
-        "wss://bisindo-react-v2-production.up.railway.app/ws"
-      ); // Ganti URL jika perlu
+        // "wss://bisindo-react-v2-production.up.railway.app/ws"
+        "ws://localhost:8000/ws"
+      ); 
       socketRef.current.onopen = () => {
         console.log("WebSocket terhubung.");
-        // Pastikan interval tidak dibuat ulang jika sudah ada
         if (!intervalRef.current) {
           intervalRef.current = setInterval(sendFrame, 400);
         }
@@ -94,7 +94,7 @@ function BelajarPage() {
   };
 
   const stopCamera = useCallback(() => {
-    // <-- Bungkus dengan useCallback
+    // Bungkusssss pake useCallback
     if (streamRef.current) {
       streamRef.current.getTracks().forEach((track) => track.stop());
       streamRef.current = null;
@@ -102,7 +102,7 @@ function BelajarPage() {
     if (videoRef.current) {
       videoRef.current.srcObject = null;
     }
-    setIsCameraOn(false); // Pastikan setIsCameraOn ada di dalam jika perlu
+    setIsCameraOn(false); 
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
       intervalRef.current = null;
@@ -115,12 +115,12 @@ function BelajarPage() {
       clearTimeout(nextQuestionTimerRef.current);
       nextQuestionTimerRef.current = null;
     }
-    setPrediction("-"); // Pastikan setPrediction ada di dalam jika perlu
-    resetExamState(); // Pastikan resetExamState ada di dalam jika perlu
-  }, []); // <-- Tambahkan dependency array kosong
+    setPrediction("-"); 
+    resetExamState(); 
+  }, []); // Tambahkan dependency array kosongggg
 
   const sendFrame = () => {
-    // Pastikan semua referensi valid sebelum mengirim frame
+    // jang mastikeun semua referensi valid sebelum mengirim frame
     if (
       !socketRef.current ||
       socketRef.current.readyState !== WebSocket.OPEN ||
@@ -138,7 +138,7 @@ function BelajarPage() {
     context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
     canvas.toBlob(
       (blob) => {
-        // Periksa lagi koneksi sebelum mengirim
+        // Periksa deui koneksi sebelum mengirim
         if (
           blob &&
           socketRef.current &&
@@ -204,7 +204,7 @@ function BelajarPage() {
     }
   };
 
-  // --- Hooks ---
+  //  Hooks 
   useEffect(() => {
     // Cleanup effect utama saat komponen dilepas
     return () => {
