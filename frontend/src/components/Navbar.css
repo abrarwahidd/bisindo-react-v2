@@ -34,7 +34,7 @@
   gap: 0.75rem; /* Beri jarak antara logo dan teks */
   font-size: 1.6rem;
   font-weight: 700;
-  color: #4cbdd9;
+  /* color: #4cbdd9; */
   color:red;
   text-decoration: none;
 }
@@ -63,10 +63,12 @@
   transition: color 0.3s ease;
 }
 .nav-link:hover {
-  color: #4cbdd9;
+  /* color: #4cbdd9; */
+  color: red;
 }
 .nav-link.active {
-  color: #4cbdd9;
+  /* color: #4cbdd9; */
+  color: red;
   font-weight: 700;
 }
 
@@ -80,7 +82,8 @@
 .navbar-right .cta-button {
   display: inline-block;
   padding: 0.75rem 1.5rem;
-  background-color: #4cbdd9;
+  /* background-color: #4cbdd9; */
+  background-color: red;
   color: white;
   border-radius: 8px;
   text-decoration: none;

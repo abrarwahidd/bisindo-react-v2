@@ -132,7 +132,8 @@
   gap: 0.5rem;
   font-family: "Poppins", sans-serif;
   padding: 0.9rem 2rem;
-  background-color: #4cbdd9;
+  /* background-color: #4cbdd9; */
+  background-color: red;
   color: white;
   text-decoration: none;
   font-size: 1.1rem;
@@ -222,7 +223,8 @@
   left: -20px;
   width: 80%;
   height: 70%;
-  background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+  /* background: linear-gradient(135deg, #e0f2fe, #bae6fd); */
+  background: linear-gradient(135deg, #e0f2fe, #f67476);
   border-radius: 16px;
   z-index: 1;
 }
