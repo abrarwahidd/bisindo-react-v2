@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react"; // <-- Impor useEffect
 import { Link, NavLink } from "react-router-dom";
 import "./Navbar.css";
-import siteLogo from "../assets/images/logoo2.png";
+import siteLogo from "../assets/images/logo-dewantara.png";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -44,7 +44,7 @@ function Navbar() {
             onClick={() => setIsMenuOpen(false)}
           >
             <img src={siteLogo} alt="Bvision Logo" className="navbar-logo" />
-            <span>Bvision</span> {/* Bungkus teks dengan span */}
+            <span>DEWANTARA</span> {/* Bungkus teks dengan span */}
           </Link>
         </div>
 
