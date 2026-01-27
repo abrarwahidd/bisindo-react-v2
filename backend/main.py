@@ -8,8 +8,8 @@ from fastapi.responses import HTMLResponse
 import asyncio
 
 #konfigurasi
-MODEL_PATH = 'models/model_dewantara.pkl'
-SCALER_PATH = 'models/scaler_dewantara.pkl'
+MODEL_PATH = 'models/3bisindo_model.pkl'
+SCALER_PATH = 'models/3scaler.pkl'
 NUM_FEATURES = 84 # untuk input yaitu 84 fitur (2 tangan * 21 landmark * 2 koordinat)
 
 #bikin class untuk proses logika
