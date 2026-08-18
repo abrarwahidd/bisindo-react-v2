@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 export default function useWindowSize() {
   // State untuk menyimpan lebar jendela
   const [windowSize, setWindowSize] = useState({
-    width: window.innerWidth, // Ambil lebar awal saat hook dijalankan
+    width: typeof window !== "undefined" ? window.innerWidth : 0,
   });
 
   useEffect(() => {

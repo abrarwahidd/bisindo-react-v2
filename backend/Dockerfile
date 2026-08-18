@@ -2,7 +2,7 @@
 
 FROM python:3.11-slim
 
-# Instal dependensi sistem (FORMAT DIPERBAIKI)
+# Instal dependensi sistem
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         libgl1 \
@@ -10,7 +10,6 @@ RUN apt-get update && \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# ... (sisa Dockerfile biarkan sama) ...
 WORKDIR /app
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt

@@ -4,12 +4,12 @@ import joblib
 import mediapipe as mp
 import numpy as np
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
-from fastapi.responses import HTMLResponse
+from fastapi.middleware.cors import CORSMiddleware
 import asyncio
 
 #konfigurasi
-MODEL_PATH = 'models/model_dewantara.pkl'
-SCALER_PATH = 'models/scaler_dewantara.pkl'
+MODEL_PATH = 'models/model_new.pkl'
+SCALER_PATH = 'models/scaler_new.pkl'
 NUM_FEATURES = 84 # untuk input yaitu 84 fitur (2 tangan * 21 landmark * 2 koordinat)
 
 #bikin class untuk proses logika
@@ -83,7 +83,13 @@ class SignLanguageDetector:
     
 # Inisialisasi FastAPI
 app = FastAPI()
-detector = SignLanguageDetector() #objek detektor
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+detector = SignLanguageDetector()
 
 #endpoint websocket
 @app.websocket("/ws")

@@ -28,6 +28,7 @@ function BelajarPage() {
   const streamRef = useRef(null);
   const intervalRef = useRef(null);
   const nextQuestionTimerRef = useRef(null);
+  const canvasRef = useRef(document.createElement("canvas"));
   const latestState = useRef({});
   latestState.current = { activePane, currentInstructionChar, feedback }; // Simpan state terbaru di ref
 
@@ -51,9 +52,8 @@ function BelajarPage() {
         generateNewQuestion();
       }
       socketRef.current = new WebSocket(
-        // "wss://bisindo-react-v2-production.up.railway.app/ws"
-        "ws://localhost:8000/ws"
-      ); 
+        process.env.REACT_APP_WS_URL || "ws://localhost:8000/ws"
+      );
       socketRef.current.onopen = () => {
         console.log("WebSocket terhubung.");
         if (!intervalRef.current) {
@@ -131,7 +131,7 @@ function BelajarPage() {
     ) {
       return;
     }
-    const canvas = document.createElement("canvas");
+    const canvas = canvasRef.current;
     canvas.width = videoRef.current.videoWidth;
     canvas.height = videoRef.current.videoHeight;
     const context = canvas.getContext("2d");

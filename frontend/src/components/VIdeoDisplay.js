@@ -11,4 +11,5 @@ const VideoDisplay = forwardRef((props, ref) => (
     ></video>
   </div>
 ));
+VideoDisplay.displayName = "VideoDisplay";
 export default VideoDisplay;
