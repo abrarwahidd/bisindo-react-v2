@@ -4,6 +4,8 @@ Bvision adalah aplikasi web edukasi berbasis kecerdasan buatan yang memungkinkan
 
 ---
 
+![Hero Ikon](frontend/public/asetreadme/image.png)
+
 ## Daftar Isi
 
 - [Deskripsi Proyek](#deskripsi-proyek)
